@@ -1,0 +1,277 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Token tema ─────────────────────────────────────────────
+   Cerah = lalai pada :root · Gelap = kelas .dark pada <html>  */
+:root {
+  color-scheme: light;
+  --bg-main: #f8fafc;
+  --bg-panel: #ffffff;
+  --bg-elevated: #ffffff;
+  --border-color: rgb(226 232 240 / 0.8);
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+
+  --hover: #f1f5f9;
+  --accent: #4f46e5;
+  --accent-2: #4f46e5;
+  --accent-soft: rgb(79 70 229 / 0.08);
+  --accent-text: #4f46e5;
+  --ok: #059669;
+  --bad: #dc2626;
+  --scroll-thumb: rgb(148 163 184 / 0.25);
+  --scroll-thumb-hover: rgb(100 116 139 / 0.5);
+}
+
+:root.dark {
+  color-scheme: dark;
+  --bg-main: #09090b;
+  --bg-panel: #111114;
+  --bg-elevated: #17171b;
+  --border-color: rgb(255 255 255 / 0.08);
+  --text-primary: #f4f4f5;
+  --text-secondary: #a1a1aa;
+
+  --hover: #18181b;
+  --accent: #6366f1;
+  --accent-2: #06b6d4;
+  --accent-soft: rgb(99 102 241 / 0.15);
+  --accent-text: #a5b4fc;
+  --ok: #34d399;
+  --bad: #f87171;
+  --scroll-thumb: rgb(148 163 184 / 0.25);
+  --scroll-thumb-hover: rgb(203 213 225 / 0.45);
+}
+
+/* ── Liquid Glass: .glass on <html>; light/dark half follows the OS via .dark ── */
+:root.glass {
+  --bg-main: transparent;
+  --bg-panel: rgb(255 255 255 / 0.6);
+  --bg-elevated: rgb(255 255 255 / 0.72);
+  --border-color: rgb(255 255 255 / 0.6);
+  --text-secondary: #475569; /* darker than plain light: keeps contrast on glass */
+  --hover: rgb(255 255 255 / 0.55);
+  --glass-shine: rgb(255 255 255 / 0.7);
+  --mesh:
+    radial-gradient(at 12% 18%, rgb(59 130 246 / 0.28) 0, transparent 50%),
+    radial-gradient(at 88% 12%, rgb(99 102 241 / 0.26) 0, transparent 50%),
+    radial-gradient(at 70% 88%, rgb(34 211 238 / 0.24) 0, transparent 55%),
+    radial-gradient(at 20% 85%, rgb(129 140 248 / 0.18) 0, transparent 50%),
+    #eef2ff;
+}
+:root.glass.dark {
+  --bg-panel: rgb(15 23 42 / 0.55);
+  --bg-elevated: rgb(15 23 42 / 0.7);
+  --border-color: rgb(255 255 255 / 0.15);
+  --text-secondary: #cbd5e1;
+  --hover: rgb(255 255 255 / 0.07);
+  --glass-shine: rgb(255 255 255 / 0.12);
+  --mesh:
+    radial-gradient(at 12% 18%, rgb(37 99 235 / 0.35) 0, transparent 50%),
+    radial-gradient(at 88% 12%, rgb(79 70 229 / 0.35) 0, transparent 50%),
+    radial-gradient(at 70% 88%, rgb(6 182 212 / 0.25) 0, transparent 55%),
+    #020617;
+}
+
+/* ── Sky Frost: .frost on <html>; always light ── */
+:root.frost {
+  color-scheme: light;
+  --bg-main: transparent;
+  --bg-panel: rgb(255 255 255 / 0.75);
+  --bg-elevated: rgb(255 255 255 / 0.85);
+  --border-color: rgb(255 255 255 / 0.9);
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --hover: rgb(255 255 255 / 0.9);
+  --accent: #0284c7;
+  --accent-2: #2563eb;
+  --accent-soft: rgb(2 132 199 / 0.1);
+  --accent-text: #0284c7;
+  --glass-shine: rgb(255 255 255 / 0.9);
+  --frost-panel: rgb(224 242 254 / 0.7); /* status bar */
+  --mesh:
+    radial-gradient(at 8% 0%, rgb(125 211 252 / 0.35) 0, transparent 55%),
+    linear-gradient(135deg, #e0f2fe 0%, #dbeafe 45%, #f0f9ff 100%);
+}
+
+@theme inline {
+  --color-bg: var(--bg-main);
+  --color-panel: var(--bg-panel);
+  --color-elevated: var(--bg-elevated);
+  --color-hover: var(--hover);
+  --color-fg: var(--text-primary);
+  --color-muted: var(--text-secondary);
+  --color-line: var(--border-color);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-text: var(--accent-text);
+  --color-ok: var(--ok);
+  --color-bad: var(--bad);
+}
+
+@layer base {
+  body {
+    margin: 0;
+    background: var(--bg-main);
+    color: var(--text-primary);
+    font-family: Inter, "Segoe UI", system-ui, sans-serif;
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease;
+  }
+
+  /* Peralihan lembut permukaan bertema (Gelap ↔ Cerah) */
+  .bg-bg,
+  .bg-panel,
+  .bg-elevated,
+  .border-line {
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.3s ease, color 0.2s ease;
+  }
+
+  /* Scrollbar nipis & trek lutsinar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scroll-thumb) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background: var(--scroll-thumb);
+    transition: background-color 0.2s ease;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scroll-thumb-hover);
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  /* Peluncur julat: trek nipis indigo → cyan, thumb bulat bercahaya */
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 5px;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, #6366f1, #06b6d4);
+    outline: none;
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 9999px;
+    background: #fff;
+    border: 2px solid #6366f1;
+    box-shadow: 0 0 0 3px rgb(99 102 241 / 0.18), 0 1px 3px rgb(0 0 0 / 0.3);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  input[type="range"]:hover::-webkit-slider-thumb,
+  input[type="range"]:focus-visible::-webkit-slider-thumb {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 6px rgb(99 102 241 / 0.22), 0 1px 3px rgb(0 0 0 / 0.3);
+  }
+  input[type="range"]:focus-visible {
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  input[type="range"]:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+/* ── Panel tab: kandungan masuk lembut setiap kali tab ditukar ── */
+@keyframes tabFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tab-fade-in {
+  animation: tabFadeIn 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Penunjuk tab aktif: gelongsor mendatar */
+.tab-pill {
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tab-fade-in {
+    animation: none;
+  }
+  .tab-pill {
+    transition: none;
+  }
+}
+
+/* ── Liquid Glass surfaces: unlayered so they win over Tailwind utilities ── */
+:root.glass body {
+  background: var(--mesh) fixed;
+}
+:root.glass :is(header, footer, .bg-panel, .modal-surface) {
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  backdrop-filter: blur(24px) saturate(150%);
+}
+:root.glass .modal-surface {
+  background: var(--bg-panel);
+}
+:root.glass :is(header, footer, .modal-surface, .rounded-xl.bg-panel) {
+  border-color: var(--border-color);
+  box-shadow: 0 8px 32px rgb(15 23 42 / 0.08), inset 0 1px 0 var(--glass-shine);
+}
+@media (prefers-reduced-transparency: reduce) {
+  :root.glass {
+    --bg-panel: var(--bg-elevated);
+  }
+}
+
+/* ── Sky Frost surfaces ── */
+:root.frost body {
+  background: var(--mesh) fixed;
+}
+:root.frost :is(header, footer, .bg-panel, .modal-surface) {
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+:root.frost footer {
+  background: var(--frost-panel);
+  border-color: rgb(255 255 255 / 0.8);
+}
+:root.frost :is(.bg-panel, .modal-surface) {
+  box-shadow: 0 8px 24px rgb(14 165 233 / 0.07);
+}
+:root.frost .modal-surface {
+  background: var(--bg-panel);
+}
+:root.frost :is(header, footer, .modal-surface, .rounded-xl.bg-panel) {
+  border-color: var(--border-color);
+  box-shadow: 0 8px 24px rgb(14 165 233 / 0.07), inset 0 1px 0 var(--glass-shine);
+}
+/* Bar kemajuan & butang utama: azure → cobalt */
+:root.frost input[type="range"] {
+  background: linear-gradient(90deg, #0284c7, #2563eb);
+}
+:root.frost input[type="range"]::-webkit-slider-thumb {
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgb(2 132 199 / 0.18), 0 1px 3px rgb(0 0 0 / 0.3);
+}
+@media (prefers-reduced-transparency: reduce) {
+  :root.frost {
+    --bg-panel: var(--bg-elevated);
+  }
+}
