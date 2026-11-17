@@ -56,7 +56,7 @@ AI features run on CPU without a GPU, but are substantially slower. GPU accelera
 ## Installation
 
 ### Installer (recommended)
-1. Download the latest `MorphImage_<version>_x64-setup.exe` (or `.msi`) from Releases.
+1. Download the latest `MorphImage_<version>_x64-setup.exe` from Releases.
 2. Run the installer and follow the prompts.
 3. Launch **MorphImage** from the Start Menu.
 
@@ -86,9 +86,10 @@ npm run tauri dev
 npm run tauri build
 ```
 
-Windows installers are produced at:
-- `src-tauri/target/release/bundle/nsis/MorphImage_<version>_x64-setup.exe`
-- `src-tauri/target/release/bundle/msi/MorphImage_<version>_x64_en-US.msi`
+The Windows installer is produced at:
+`src-tauri/target/release/bundle/nsis/MorphImage_<version>_x64-setup.exe`
+
+(`<version>` comes from `package.json` / `tauri.conf.json` — currently `0.1.0`.)
 
 ---
 

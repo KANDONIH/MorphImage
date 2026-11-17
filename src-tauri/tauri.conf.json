@@ -29,7 +29,7 @@
   },
   "bundle": {
     "active": true,
-    "targets": "all",
+    "targets": ["nsis"],
     "publisher": "Kando",
     "copyright": "Copyright © 2026 Kando",
     "icon": [
